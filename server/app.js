@@ -11,7 +11,7 @@ app.get('/api/tickets/', async(req, res)=> {
         res.send(tickets);
     } else {
         const filterText = tickets.filter((text) => 
-        text.title.toLowerCase().includes(req.query.searchText))
+        text.title.toLowerCase().includes(req.query.searchText.toString()))
         res.send(filterText)
     }      
 });

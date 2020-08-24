@@ -23,7 +23,7 @@ const TicketPage = (props) => {
         <div>
         <input type="text" id="searchInput" />
         {ticketsData.map(ticket => {
-                return <Ticket ticki={ticket} label={ticket.labels}/>
+                return <Ticket content={ticket.content} labels={ticket.labels} key={ticket.id} title={ticket.title}/>
         })}
         </div>
     );
