@@ -1,6 +1,4 @@
-/**
- * @jest-environment node
- */
+
 const request = require('supertest');
 const full4s = require('@suvelocity/tester');
 const app = require('./app');
