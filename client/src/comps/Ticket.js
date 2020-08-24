@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react'
 
-const Ticket = () => {
+const Ticket = (props) => {
     return (
         <div className="ticket">
-            Ticket Alive
+        {JSON.stringify(props.ticki)}
         </div>
     );
 }
