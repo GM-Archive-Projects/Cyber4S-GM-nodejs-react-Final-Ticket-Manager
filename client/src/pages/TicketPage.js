@@ -39,8 +39,8 @@ const TicketPage = (props) => {
     return (
         <div>
           <input id="searchInput" onChange={e => inputChangeHandler(e.target.value)} />
-          <button className="restoreHideTickets" onClick={() => restoreHidden()}> Restore Hidden Tickets</button>
-          <div className="hideTicketsCounter">Hidden Tickets {hiddenTickets.length}</div>
+          <button id="restoreHideTickets" onClick={() => restoreHidden()}> Restore Hidden Tickets</button>
+          <div id="hideTicketsCounter">{hiddenTickets.length}</div>
           <div>Available Ticket ={ticketsData.length}</div>
         {ticketsData.map(ticket => {
                 return <Ticket content={ticket.content} labels={ticket.labels} key={ticket.id} title={ticket.title} hideTicketsHandler={hideTicketsHandler} ticket={ticket}/>
