@@ -1,18 +1,18 @@
 import React, {useEffect, useState} from 'react'
 
-
+// const style={
+//     display:" inline-block",
+//     padding: "16px",
+//     textAlign: "center",
+//     margin: "16px",
+//     border:"1px solid black"
+//     } style={style}
 
 
 const Ticket = (props) => {
-    const style={
-    display:" inline-block",
-    padding: "16px",
-    textAlign: "center",
-    margin: "16px",
-    border:"1px solid black"
-    }
+
     return (
-        <div className="ticket" style={style}>
+        <div className="ticket">
             <h1>{JSON.stringify(props.title)}</h1>
             <div id={props.key} className="ticketContent">
             {props.content}

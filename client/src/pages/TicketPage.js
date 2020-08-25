@@ -4,9 +4,12 @@ import Ticket from '../comps/Ticket'
 
 //Insert USE Effect to fetch Data
 //Data will Be set at setData
+          {/* <input type="text" id="searchInput" onChange={inputChangeHandler} value={userInput}/> */}
+
 const TicketPage = (props) => {
     const [ticketsData, setTicketsData] = useState([]);
-    const [userInput, setUserInput] = useState('aaa')
+    // const [userInput, setUserInput] = useState('aa')
+
     const [hidden, setHidden] = useState([]);
 
     useEffect(()=> {
@@ -17,25 +20,22 @@ const TicketPage = (props) => {
         fetchData();
     }, [])
 
+    // const inputChangeHandler = (event) => {
+    //     const input = event.currentTarget.value;
+    //     setUserInput(input);
+    // };
+    // useEffect(()=> {
+    //     async function fetchFilteredData(userInput) {
+    //         const filteredTickets = await searchTickets(userInput);
+            
+    //         setUserInput(filteredTickets);
+    //     }
+    //     fetchFilteredData();
+    // }, [userInput])
 
-    const inputChangeHandler = (event) => {
-        const input = event.currentTarget.value;
-        setUserInput(input);
-      };
-
-      
-    useEffect(()=> {
-        async function fetchFilteredData() {
-            const filteredTickets = await searchTickets(userInput);
-            setTicketsData(filteredTickets.data);
-        }
-        fetchFilteredData();
-    }, [userInput])
-
-    
     return (
         <div>
-          <input type="text" id="searchInput" onChange={inputChangeHandler} value={userInput}/>
+          {/* <input type="text" id="searchInput" onChange={inputChangeHandler} value={userInput} /> */}
         {ticketsData.map(ticket => {
                 return <Ticket content={ticket.content} labels={ticket.labels} key={ticket.id} title={ticket.title}/>
         })}
@@ -49,3 +49,19 @@ const TicketPage = (props) => {
 
 
 export default TicketPage;
+
+
+
+
+
+
+
+  
+// useEffect(()=> {
+//     async function fetchFilteredData() {
+//         const filteredTickets = await searchTickets(userInput);
+//         setTicketsData(filteredTickets.data);
+//     }
+//     fetchFilteredData();
+// }, [userInput])
+
