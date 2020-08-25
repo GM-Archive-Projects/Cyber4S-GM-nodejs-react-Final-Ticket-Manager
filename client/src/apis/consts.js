@@ -1,4 +1,5 @@
 //Here We Will put Our URL
-const PORT = 8080
-const BASEURL = `http://localhost:${PORT}`;
-export const TICKETS = BASEURL + "/api/tickets/"
+const PORT = 3000
+const BASEURL = "/api/tickets/"
+export const TICKETS = BASEURL
+export const SEARCHTEXT = BASEURL + '/?searchText=' 
