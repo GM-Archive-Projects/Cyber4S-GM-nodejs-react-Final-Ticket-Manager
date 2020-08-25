@@ -8,9 +8,8 @@ import Ticket from '../comps/Ticket'
 
 const TicketPage = (props) => {
     const [ticketsData, setTicketsData] = useState([]);
-    const [userInput, setUserInput] = useState('')
-
-    const [hidden, setHidden] = useState([]);
+    const [hiddenTickets, setHiddenTickets] = useState([])
+    const [count, setCount] = useState(0)
 
     useEffect(()=> {
         async function fetchData() {
@@ -20,24 +19,23 @@ const TicketPage = (props) => {
         fetchData();
     }, [])
 
-    const inputChangeHandler = (event) => {
-        const input = event.currentTarget.value;
-        setUserInput(input);
+    const inputChangeHandler = async (value) => {
+        const {data} = await searchTickets(value)
+        setTicketsData(data);
     };
-    useEffect(() => {
-        async function fetchFilteredData() {
-            console.log(userInput)
-            const filteredTickets = await searchTickets(userInput);
-            setTicketsData(filteredTickets.data);
-        }
-        fetchFilteredData();
-    }, [userInput])
+    const hideTicketsHandler = (ticket) => {
+        const filteredTickets = ticketsData.filter((t) => t.id !== ticket.id)
+        console.log(filteredTickets)
+        setTicketsData(filteredTickets)
+        setHiddenTickets([...hiddenTickets, ticket])
+    }
 
     return (
         <div>
-          <input type="text" id="searchInput" onChange={inputChangeHandler} value={userInput} />
+          <input id="searchInput" onChange={e => inputChangeHandler(e.target.value)} />
+          <button>Restore Hidden Tickets {hiddenTickets.length}</button>
         {ticketsData.map(ticket => {
-                return <Ticket content={ticket.content} labels={ticket.labels} key={ticket.id} title={ticket.title}/>
+                return <Ticket content={ticket.content} labels={ticket.labels} key={ticket.id} title={ticket.title} hideTicketsHandler={hideTicketsHandler} ticket={ticket}/>
         })}
         </div>
     );

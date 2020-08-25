@@ -14,6 +14,7 @@ const Ticket = (props) => {
     return (
         <div className="ticket">
             <h1>{JSON.stringify(props.title)}</h1>
+            <button className="hideTickets" onClick={() => props.hideTicketsHandler(props.ticket)}>Hide</button>
             <div id={props.key} className="ticketContent">
             {props.content}
             </div>
