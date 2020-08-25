@@ -30,10 +30,18 @@ const TicketPage = (props) => {
         setHiddenTickets([...hiddenTickets, ticket])
     }
 
+    const restoreHidden = () => {
+        const ticketToRestore = [...hiddenTickets];
+        const newTickets = ticketsData.concat(ticketToRestore)
+        setHiddenTickets([]);
+        setTicketsData(newTickets)
+    }
     return (
         <div>
           <input id="searchInput" onChange={e => inputChangeHandler(e.target.value)} />
-          <button>Restore Hidden Tickets {hiddenTickets.length}</button>
+          <button className="restoreHideTickets" onClick={() => restoreHidden()}> Restore Hidden Tickets</button>
+          <div className="hideTicketsCounter">Hidden Tickets {hiddenTickets.length}</div>
+          <div>Available Ticket ={ticketsData.length}</div>
         {ticketsData.map(ticket => {
                 return <Ticket content={ticket.content} labels={ticket.labels} key={ticket.id} title={ticket.title} hideTicketsHandler={hideTicketsHandler} ticket={ticket}/>
         })}
