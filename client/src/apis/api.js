@@ -10,7 +10,7 @@ export const getTickets = async () => {
     return await axios.get(TICKETS)
 }
 
-// export const searchTickets = async (input) => {
-//     return await axios.get(SEARCHTEXT + input)
-// }
+export const searchTickets = async (input) => {
+    return await axios.get(SEARCHTEXT + input)
+}
 

@@ -8,7 +8,7 @@ import Ticket from '../comps/Ticket'
 
 const TicketPage = (props) => {
     const [ticketsData, setTicketsData] = useState([]);
-    // const [userInput, setUserInput] = useState('aa')
+    const [userInput, setUserInput] = useState('')
 
     const [hidden, setHidden] = useState([]);
 
@@ -20,22 +20,22 @@ const TicketPage = (props) => {
         fetchData();
     }, [])
 
-    // const inputChangeHandler = (event) => {
-    //     const input = event.currentTarget.value;
-    //     setUserInput(input);
-    // };
-    // useEffect(()=> {
-    //     async function fetchFilteredData(userInput) {
-    //         const filteredTickets = await searchTickets(userInput);
-            
-    //         setUserInput(filteredTickets);
-    //     }
-    //     fetchFilteredData();
-    // }, [userInput])
+    const inputChangeHandler = (event) => {
+        const input = event.currentTarget.value;
+        setUserInput(input);
+    };
+    useEffect(() => {
+        async function fetchFilteredData() {
+            console.log(userInput)
+            const filteredTickets = await searchTickets(userInput);
+            setTicketsData(filteredTickets.data);
+        }
+        fetchFilteredData();
+    }, [userInput])
 
     return (
         <div>
-          {/* <input type="text" id="searchInput" onChange={inputChangeHandler} value={userInput} /> */}
+          <input type="text" id="searchInput" onChange={inputChangeHandler} value={userInput} />
         {ticketsData.map(ticket => {
                 return <Ticket content={ticket.content} labels={ticket.labels} key={ticket.id} title={ticket.title}/>
         })}
