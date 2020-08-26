@@ -6,8 +6,7 @@ const Ticket = (props) => {
         <div className="ticket">
             <h1>{JSON.stringify(props.title)}</h1>
             <button className="hideTicketButton" onClick={() => props.hideTicketsHandler(props.ticket)}>Hide</button>
-            <button className="setTicketDone" onClick={() => props.setTicketDone(props.ticket)}>Mark as Done</button>
-            <button className="setTicketUnDone" onClick={() => props.setTicketUnDone(props.ticket)}>Mark as Undone</button>
+            <button className="changeTicketState" onClick={props.ticket.done ? () => props.setTicketUnDone(props.ticket.id) : () => props.setTicketDone(props.ticket.id)}> {props.ticket.done ? 'Undone' : 'done'}</button>
             <div id={props.key} className="ticketContent">
             {props.content}
             </div>

@@ -39,14 +39,22 @@ const TicketPage = (props) => {
         setTicketsData(newTickets)
     }
 
-    const setTicketDone = async (ticket) => {
-        await setDone(ticket.id)
+    const setTicketDone = async (id) => {
+        await setDone(id)
+        console.log(`Ticket Updated To be Done`)
+        const tickets = await getTickets();
+        setTicketsData(tickets.data);
+        
+        
+    }
+    
+    const setTicketUnDone = async (id) => {
+        await setUnDone(id)
+        console.log(`Ticket Updated To be UnDone`)
+        const tickets = await getTickets();
+        setTicketsData(tickets.data);
     }
 
-    const setTicketUnDone = async (ticket) => {
-        await setUnDone(ticket.id)
-
-    }
     return (
         <div>
           <input id="searchInput" onChange={e => inputChangeHandler(e.target.value)} />
