@@ -40,7 +40,6 @@ const TicketPage = (props) => {
     }
 
     const setTicketDone = async (ticket) => {
-        console.log(ticket.id)
         await setDone(ticket.id)
     }
 

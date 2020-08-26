@@ -28,23 +28,25 @@ app.post('/api/tickets/:ticketId/done', async(req,res)=>{
         });
     tickets = JSON.stringify(newTicket);
     await fs.writeFile('./data.json', tickets);
+    console.log(`Ticket ${req.params.ticketId} Changed To Done --> True`)
     res.send( { updated: true });
-    }
-    catch (error) { res.send({ updated: false }); }
+  }
+  catch (error) { res.send({ updated: false }); }
+});
+
+app.post('/api/tickets/:ticketId/undone', async (req, res) => {
+  const content = await fs.readFile('./data.json');
+  let tickets = JSON.parse(content);
+  try {
+    const data = tickets.map((item) => {
+      if (item.id === req.params.ticketId) {
+        item.done = false;
+      }
+      return item;
     });
-  
-  app.post('/api/tickets/:ticketId/undone', async (req, res) => {
-    const content = await fs.readFile('./data.json');
-    let tickets = JSON.parse(content);
-    try {
-      const data = tickets.map((item) => {
-        if (item.id === req.params.ticketId) {
-          item.done = false;
-        }
-        return item;
-      });
-      tickets = JSON.stringify(data);
-      await fs.writeFile('./data.json', tickets);
-      res.send({ updated: true });
-    } catch (e) { res.send({ updated: true }); }
-  });
+    tickets = JSON.stringify(data);
+    await fs.writeFile('./data.json', tickets);
+    res.send({ updated: true });
+    console.log(`Ticket ${req.params.ticketId} Changed To Undone --> False`)
+  } catch (e) { res.send({ updated: true }); }
+});
