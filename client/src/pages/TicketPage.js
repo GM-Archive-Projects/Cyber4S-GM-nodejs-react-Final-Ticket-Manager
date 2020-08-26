@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
-import { getTickets, searchTickets } from '../apis/api'
+import { getTickets, searchTickets, setDone, setUnDone } from '../apis/api'
 import Ticket from '../comps/Ticket'
+import './TicketPage.css'
 
 //Insert USE Effect to fetch Data
 //Data will Be set at setData
@@ -9,7 +10,8 @@ import Ticket from '../comps/Ticket'
 const TicketPage = (props) => {
     const [ticketsData, setTicketsData] = useState([]);
     const [hiddenTickets, setHiddenTickets] = useState([])
-    const [count, setCount] = useState(0)
+    const [ticketDone, setTicketsDone] = useState(false)
+    // const [count, setCount] = useState(0)
 
     useEffect(()=> {
         async function fetchData() {
@@ -36,14 +38,27 @@ const TicketPage = (props) => {
         setHiddenTickets([]);
         setTicketsData(newTickets)
     }
+
+    const setTicketDone = async (ticket) => {
+        console.log(ticket.id)
+        await setDone(ticket.id)
+    }
+
+    const setTicketUnDone = async (ticket) => {
+        await setUnDone(ticket.id)
+
+    }
     return (
         <div>
           <input id="searchInput" onChange={e => inputChangeHandler(e.target.value)} />
           <button id="restoreHideTickets" onClick={() => restoreHidden()}> Restore Hidden Tickets</button>
           <div id="hideTicketsCounter">{hiddenTickets.length}</div>
-          <div>Available Ticket ={ticketsData.length}</div>
+          <div className="hideTicketsCounter">Hidden Tickets = {hiddenTickets.length}</div>
+          
+
+          <div>Available Ticket = {ticketsData.length}</div>
         {ticketsData.map(ticket => {
-                return <Ticket content={ticket.content} labels={ticket.labels} key={ticket.id} title={ticket.title} hideTicketsHandler={hideTicketsHandler} ticket={ticket}/>
+                return <Ticket content={ticket.content} labels={ticket.labels} key={ticket.id} title={ticket.title} hideTicketsHandler={hideTicketsHandler} ticket={ticket} setTicketDone={setTicketDone} setTicketUnDone={setTicketUnDone}/>
         })}
         </div>
     );

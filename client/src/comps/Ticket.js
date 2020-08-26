@@ -1,25 +1,17 @@
 import React, {useEffect, useState} from 'react'
-
-// const style={
-//     display:" inline-block",
-//     padding: "16px",
-//     textAlign: "center",
-//     margin: "16px",
-//     border:"1px solid black"
-//     } style={style}
-
-
+import './Ticket.css'
 const Ticket = (props) => {
 
     return (
         <div className="ticket">
             <h1>{JSON.stringify(props.title)}</h1>
             <button className="hideTicketButton" onClick={() => props.hideTicketsHandler(props.ticket)}>Hide</button>
+            <button className="setTicketDone" onClick={() => props.setTicketDone(props.ticket)}>Mark as Done</button>
+            <button className="setTicketUnDone" onClick={() => props.setTicketUnDone(props.ticket)}>Mark as Undone</button>
             <div id={props.key} className="ticketContent">
             {props.content}
             </div>
-            <br></br>
-            <p>{JSON.stringify((props.labels))}</p>
+            <br />
             <div>{props.labels && props.labels.map((label) => <div className="label">{label}</div>)}</div>
         </div>
     );

@@ -1,0 +1,13 @@
+/* Done Ticket */
+
+/* .hiddenTicket {
+    display: none;
+} */
+
+.ticket {
+    display: inline-block;
+    padding: 16px;
+    text-Align: center;
+    margin: 16px;
+    border: 1px solid black
+}
