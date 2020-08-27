@@ -13,7 +13,9 @@ export const DropdownButton = ({sortTicketsByDate, sortByContentLength }) => {
                 <Dropdown.Menu>
                     <Dropdown.Item onClick={() => sortTicketsByDate()}>Date</Dropdown.Item>
                     <Dropdown.Item onClick={() => sortByContentLength()}>Content Length</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">Completed Last</Dropdown.Item>
+                    <Dropdown.Item  onClick={() => {
+                        return sortTicketsByDate()}
+                        }>Uncompleted Tickets</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
 

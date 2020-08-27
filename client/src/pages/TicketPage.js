@@ -32,6 +32,8 @@ const TicketPage = () => {
         fetchData();
     }, [])
 
+
+
     const inputChangeHandler = async (value) => {
         const {data} = await searchTickets(value)
         setTicketsData(data);
@@ -97,7 +99,7 @@ const TicketPage = () => {
 
     
     const sortTicketsByDate = () => {
-        const sortedTickets = ticketsData.slice().sort((a, b) => b.creationTime - a.creationTime)
+        const sortedTickets = ticketsData.slice().sort((a, b) => a.creationTime - b.creationTime)
         setTicketsData(sortedTickets);
 
     }
