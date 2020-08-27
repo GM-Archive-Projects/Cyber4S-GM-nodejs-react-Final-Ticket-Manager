@@ -1,17 +1,27 @@
 import React, {useEffect, useState} from 'react'
 import { getTickets, searchTickets, setDone, setUnDone } from '../apis/api'
-import Ticket from '../comps/Ticket'
+import Ticket  from '../comps/Ticket'
+import DropdownButton  from '../comps/Dropdown'
+
 import './TicketPage.css'
+import { Dropdown } from 'react-bootstrap';
 
 //Insert USE Effect to fetch Data
 //Data will Be set at setData
           {/* <input type="text" id="searchInput" onChange={inputChangeHandler} value={userInput}/> */}
 
-const TicketPage = (props) => {
+const TicketPage = () => {
     const [ticketsData, setTicketsData] = useState([]);
     const [hiddenTickets, setHiddenTickets] = useState([])
-    const [ticketDone, setTicketsDone] = useState(false)
-    // const [count, setCount] = useState(0)
+    const [completedTickets, setcompletedTickets] = useState([])
+    const [seconds, setSeconds] = useState(10)
+
+    // useEffect(seconds) => {
+    //     if (seconds >= 0) {
+    //         setTimeout(() => setSeconds(seconds - 1))
+    //     } else {setSeconds(-1)}
+    // }
+
 
     useEffect(()=> {
         async function fetchData() {
@@ -39,42 +49,83 @@ const TicketPage = (props) => {
         setTicketsData(newTickets)
     }
 
-    const setTicketDone = async (id) => {
-        await setDone(id)
+    const completeTicketHandler = (ticket) => {
+        const filteredTickets = ticketsData.filter((t) => t.id !== ticket.id)
+        setTicketsData(filteredTickets)
+        setHiddenTickets([...hiddenTickets, ticket])
+    }
+
+
+
+        
+    // const startCountdown = (ticket) => {
+    //     if (seconds >= 0) {
+    //         setTimeout(() => setSeconds(seconds - 1), 1000)
+    //         console.log(seconds)
+    //         return seconds
+    //     } else {
+    //         setSeconds(9)
+    //         return seconds
+    //     }
+    // }
+
+
+
+    const setTicketDone = async (ticket) => {
+        await setDone(ticket.id)
         console.log(`Ticket Updated To be Done`)
         const tickets = await getTickets();
         setTicketsData(tickets.data);
+
+        setTimeout(() => completeTicketHandler(ticket), 5000)
         
         
     }
     
-    const setTicketUnDone = async (id) => {
-        await setUnDone(id)
+    const setTicketUnDone = async (ticket) => {
+        await setUnDone(ticket.id)
         console.log(`Ticket Updated To be UnDone`)
         const tickets = await getTickets();
         setTicketsData(tickets.data);
     }
 
+    const getDate = (time) => {
+        const prettyDate =  new Date(time)
+        return prettyDate
+    }
+
+    
+    const sortTicketsByDate = () => {
+        const sortedTickets = ticketsData.slice().sort((a, b) => b.creationTime - a.creationTime)
+        setTicketsData(sortedTickets);
+
+    }
+    
+    const sortByContentLength = () => {
+        const sortedByContent = ticketsData.slice().sort((a, b) => a.content.length - b.content.length)
+        setTicketsData(sortedByContent);
+
+    }
+    
     return (
         <div>
           <input id="searchInput" onChange={e => inputChangeHandler(e.target.value)} />
-          <button id="restoreHideTickets" onClick={() => restoreHidden()}> Restore Hidden Tickets</button>
+          <button id="restoreHideTickets" onClick={() => restoreHidden()}>Restore Hidden Tickets</button>
+          
+          <DropdownButton sortTicketsByDate={sortTicketsByDate} sortByContentLength={sortByContentLength}/>
+
           <div id="hideTicketsCounter">{hiddenTickets.length}</div>
           <div className="hideTicketsCounter">Hidden Tickets = {hiddenTickets.length}</div>
-          
-
           <div>Available Ticket = {ticketsData.length}</div>
+
+
+
         {ticketsData.map(ticket => {
-                return <Ticket content={ticket.content} labels={ticket.labels} key={ticket.id} title={ticket.title} hideTicketsHandler={hideTicketsHandler} ticket={ticket} setTicketDone={setTicketDone} setTicketUnDone={setTicketUnDone}/>
+                return <Ticket key={ticket.id} hideTicketsHandler={hideTicketsHandler} ticket={ticket} setTicketDone={setTicketDone} setTicketUnDone={setTicketUnDone} getDate={getDate} seconds={5}/>
         })}
         </div>
     );
 }
-
-
-
-
-
 
 export default TicketPage;
 
