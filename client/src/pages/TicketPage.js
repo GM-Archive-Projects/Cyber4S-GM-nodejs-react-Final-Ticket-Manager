@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react'
-import { getTickets, searchTickets, setDone, setUnDone } from '../apis/api'
+import { getTickets, searchTickets, setDone, setUnDone, getTicket } from '../apis/api'
 import Ticket  from '../comps/Ticket'
-import DropdownButton  from '../comps/Dropdown'
+import {DropdownButton}  from '../comps/Buttons'
+import {CompletedTasksButton}  from '../comps/Buttons'
 
 import './TicketPage.css'
-import { Dropdown } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 //Insert USE Effect to fetch Data
 //Data will Be set at setData
@@ -52,7 +53,7 @@ const TicketPage = () => {
     const completeTicketHandler = (ticket) => {
         const filteredTickets = ticketsData.filter((t) => t.id !== ticket.id)
         setTicketsData(filteredTickets)
-        setHiddenTickets([...hiddenTickets, ticket])
+        setcompletedTickets([...completedTickets, ticket])
     }
 
 
@@ -106,13 +107,23 @@ const TicketPage = () => {
         setTicketsData(sortedByContent);
 
     }
-    
+
+    const getCompletedTask = async (ticket) => {
+        const data = await getTicket(ticket.id)
+        setTicketsData(data);
+
+    }
+
+
+
     return (
         <div>
           <input id="searchInput" onChange={e => inputChangeHandler(e.target.value)} />
           <button id="restoreHideTickets" onClick={() => restoreHidden()}>Restore Hidden Tickets</button>
           
           <DropdownButton sortTicketsByDate={sortTicketsByDate} sortByContentLength={sortByContentLength}/>
+          <CompletedTasksButton variant="success" completedTickets={completedTickets} setcompletedTickets={setcompletedTickets} getCompletedTask={getCompletedTask} />
+          {/* <Button variant="success">Completed Tasks: {completedTickets.length}</Button> */}
 
           <div id="hideTicketsCounter">{hiddenTickets.length}</div>
           <div className="hideTicketsCounter">Hidden Tickets = {hiddenTickets.length}</div>

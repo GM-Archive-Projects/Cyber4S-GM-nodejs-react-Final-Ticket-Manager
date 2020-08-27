@@ -1,7 +1,7 @@
 //API Calls To Use
 import React, {useEffect, useState} from 'react'
 import axios from 'axios';
-import { TICKETS, SEARCHTEXT } from './consts'
+import { TICKETS, SEARCHTEXT, TICKET } from './consts'
 
 // axios.defaults.headers.post["Content-Type"] = "application/json; charset=utf-8";
 axios.defaults.validateStatus = (status) => status >= 200 && status < 300;
@@ -24,3 +24,7 @@ export const setUnDone = async (input) => {
 }
 
 
+
+export const getTicket = async (ticketId) => {
+    return await axios.get(TICKET + ticketId)
+}

@@ -3,3 +3,4 @@ const PORT = 3000
 const BASEURL = "/api/tickets"
 export const TICKETS = BASEURL
 export const SEARCHTEXT = BASEURL + '?searchText='
+export const TICKET = BASEURL + '?ticketId='

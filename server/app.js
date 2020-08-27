@@ -4,6 +4,34 @@ const app = express();
 app.use(express.json());
 module.exports = app;
 
+
+
+
+
+
+
+
+app.get('/api/tickets/:ticketId', async(req, res)=> {
+  const content = await fs.readFile('./data.json');
+  let tickets = JSON.parse(content);
+  const data = tickets.map((item) => {
+    if (item.id === req.params.ticketId) {
+      let ticketpresent = tickets[item]
+      ticketpresent = JSON.stringify(ticketpresent);
+      res.send(ticketpresent)
+    }
+  })
+})
+
+
+
+
+
+
+
+
+
+
 app.get('/api/tickets/', async(req, res)=> {
     const content = await fs.readFile('./data.json');
     const tickets = JSON.parse(content);
