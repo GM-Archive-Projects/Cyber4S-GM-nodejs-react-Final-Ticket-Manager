@@ -14,7 +14,7 @@ export const DropdownButton = ({sortTicketsByDate, sortByContentLength}) => {
 
     return (
 
-            <Dropdown>
+            <Dropdown className="sortButton">
                 <Dropdown.Toggle variant="info" id="dropdown-basic">
                     Sort By  
                 </Dropdown.Toggle>
@@ -22,9 +22,6 @@ export const DropdownButton = ({sortTicketsByDate, sortByContentLength}) => {
                 <Dropdown.Menu>
                     <Dropdown.Item onClick={() => sortTicketsByDate()}>Date</Dropdown.Item>
                     <Dropdown.Item onClick={() => sortByContentLength()}>Content Length</Dropdown.Item>
-                    <Dropdown.Item  onClick={() => {
-                        return sortTicketsByDate()}
-                        }>Uncompleted Tickets</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
 
@@ -36,7 +33,7 @@ export const CompletedTasksButton = ({completedTickets, setTicketUnDone, getComp
     const classes = useStyles();
     return (
 
-        <Dropdown>
+        <Dropdown className="CompletedTickets">
             <Dropdown.Toggle variant="success" id="dropdown-basic">
                 Completed Tickets: {completedTickets.length}  
             </Dropdown.Toggle>

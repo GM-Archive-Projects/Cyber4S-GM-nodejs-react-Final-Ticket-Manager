@@ -5,9 +5,71 @@
 } */
 
 .ticket {
+    
     display: inline-block;
     padding: 16px;
     text-Align: center;
-    margin: 16px;
-    border: 1px solid black
+    margin: 20px;
+    width: 80vw;
+    margin-left: auto;
+    margin-right: auto;
+    border: dashed 3px darkblue;
+    border-radius: 30px;
+    display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 10px;
+  grid-template-areas: "title title title title hideTicketButton" "ticketContent ticketContent ticketContent ticketContent ticketContent" "ticketContent ticketContent ticketContent ticketContent ticketContent" ". . changeTicketState . ." ". . . . ." "date date . label label";
+  background-color: #F0FFFF;
+
+}
+
+.title { grid-area: title; }
+
+.hideTicketButton { 
+    grid-area: hideTicketButton;
+    background-color: #F0FFFF;
+    border: none;
+    color: #5F9EA0;
+    height: 30px;
+    width: 30px;
+ }
+
+.ticketContent { grid-area: ticketContent; }
+
+.changeTicketState { 
+    grid-area: changeTicketState; 
+    margin: 35px;
+
+
+}
+
+.date { grid-area: date; }
+
+
+.label {
+    grid-area: label; 
+    box-shadow:inset 0px 1px 3px 0px #91b8b3;
+    background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
+    background-color:#768d87;
+    border-radius:5px;
+    border:1px solid #566963;
+    display:inline-block;
+    color:#ffffff;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size:15px;
+    font-weight:bold;
+    text-decoration:none;
+    text-shadow:0px -1px 0px #2b665e;
+    opacity: 0.7;
+    width: 90px;
+    height: 35px;
+}
+.label:hover {
+    background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+
+}
+
+.timer {
+    width: 0%;
 }
