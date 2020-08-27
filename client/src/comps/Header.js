@@ -18,4 +18,4 @@ export const Header = ({inputChangeHandler, restoreHidden, sortTicketsByDate, so
 
         </div>
         )
-    }
+}

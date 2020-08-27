@@ -12,44 +12,45 @@ function LinearProgressWithLabel(props) {
         <LinearProgress variant="determinate" {...props} />
       </Box>
       <Box minWidth={35}>
-        <Typography variant="body2" color="textSecondary">{`${Math.round(
-          props.value / 10,
-        )}  Seconds Left!`}</Typography>
+        <Typography variant="body2" color="textSecondary">
+          {`${Math.round(
+            props.value / 10,
+          )}  Seconds Left!`}
+        </Typography>
       </Box>
     </Box>
   );
 }
 LinearProgressWithLabel.propTypes = {
-    /**
+  /**
      * The value of the progress indicator for the determinate and buffer variants.
      * Value between 0 and 100.
      */
-    value: PropTypes.number.isRequired,
-  };
-  
-  const useStyles = makeStyles({
-    root: {
-      width: '100%',
-    },
-  });
-  
-  export default function LinearWithValueLabel() {
-    const classes = useStyles();
-    const [progress, setProgress] = React.useState(10);
-  
-    React.useEffect(() => {
-      const timer = setInterval(() => {
-        setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
-      }, 800);
-      return () => {
-        clearInterval(timer);
-      };
-    }, []);
-  
-    return (
-      <div className={classes.root}>
-        <LinearProgressWithLabel value={progress} />
-      </div>
-    );
-  }
-  
+  value: PropTypes.number.isRequired,
+};
+
+const useStyles = makeStyles({
+  root: {
+    width: '100%',
+  },
+});
+
+export default function LinearWithValueLabel() {
+  const classes = useStyles();
+  const [progress, setProgress] = React.useState(10);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
+    }, 800);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
+  return (
+    <div className={classes.root}>
+      <LinearProgressWithLabel value={progress} />
+    </div>
+  );
+}
