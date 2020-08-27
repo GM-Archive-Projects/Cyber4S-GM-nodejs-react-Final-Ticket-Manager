@@ -6,46 +6,56 @@ module.exports = app;
 
 
 
-
-
+app.get('/api/tickets/', async(req, res)=> {
+  const content = await fs.readFile('./data.json');
+  const tickets = JSON.parse(content);
+  if(req.query.searchText){
+    const filterText = tickets.filter((text) => 
+    text.title.toLowerCase().includes(req.query.searchText.toString()))
+    res.send(filterText)
+  } else if (req.query.ticketId) {
+    const filterText = tickets.filter((text) => {
+      return text.id.toString().toLowerCase() === (req.query.ticketId.toString().toLowerCase())
+    })
+    res.send(filterText)
+  } else {
+    res.send(tickets);
+  }      
+});
 
 
 
 app.get('/api/tickets/:ticketId', async(req, res)=> {
-  const content = await fs.readFile('./data.json');
+  let content = await fs.readFile('./data.json');
   let tickets = JSON.parse(content);
-  const data = tickets.map((item) => {
-    if (item.id === req.params.ticketId) {
-      let ticketpresent = tickets[item]
-      ticketpresent = JSON.stringify(ticketpresent);
-      res.send(ticketpresent)
-    }
-  })
+  const filterText = tickets.filter((tick) =>  t.id.toString() === req.query.ticketId.toString());
+  console.log(filterText)
+  return res.send(filterText)
 })
 
 
 
-
-
-
-
-
-
+app.get('/api/tickets/:searchText', async(req, res)=> {
+    let content = await fs.readFile('./data.json');
+    let tickets = JSON.parse(content);
+    if(req.query.searchText){
+      let filterText = tickets.filter((text) => text.title.toLowerCase().includes(req.query.searchText.toString()))
+      res.send(filterText)
+    }else {
+      res.send(tickets)
+    }})
 
 app.get('/api/tickets/', async(req, res)=> {
-    const content = await fs.readFile('./data.json');
-    const tickets = JSON.parse(content);
-    if(!req.query.searchText){
-        res.send(tickets);
-    } else {
-        const filterText = tickets.filter((text) => 
-        text.title.toLowerCase().includes(req.query.searchText.toString()))
-        res.send(filterText)
-    }      
-});
+  console.log("Get All Tickets")
+    let content = await fs.readFile('./data.json');
+    let tickets = JSON.parse(content);
+    res.send(tickets);
+    });
+
+
 
 app.post('/api/tickets/:ticketId/done', async(req,res)=>{
-    const content = await fs.readFile('./data.json')
+    let content = await fs.readFile('./data.json')
     let tickets = JSON.parse(content);
     try {
         const newTicket = tickets.map((item)=>{
@@ -63,7 +73,7 @@ app.post('/api/tickets/:ticketId/done', async(req,res)=>{
 });
 
 app.post('/api/tickets/:ticketId/undone', async (req, res) => {
-  const content = await fs.readFile('./data.json');
+  let content = await fs.readFile('./data.json');
   let tickets = JSON.parse(content);
   try {
     const data = tickets.map((item) => {

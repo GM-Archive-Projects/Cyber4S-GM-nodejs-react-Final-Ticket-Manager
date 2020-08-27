@@ -14,7 +14,7 @@ import { Button } from 'react-bootstrap';
 const TicketPage = () => {
     const [ticketsData, setTicketsData] = useState([]);
     const [hiddenTickets, setHiddenTickets] = useState([])
-    const [completedTickets, setcompletedTickets] = useState([])
+    const [completedTickets, setCompletedTickets] = useState([])
     const [seconds, setSeconds] = useState(10)
 
     // useEffect(seconds) => {
@@ -23,14 +23,42 @@ const TicketPage = () => {
     //     } else {setSeconds(-1)}
     // }
 
+    // async function fetchData() {
+    //     const tickets = await getTickets();
+    //     let tempTickets = [...tickets.data]
+    //     let tempTickets2 = [...tickets.data].filter((t) => !t.done)
+    //     const tempCompletedTickets = tempTickets.filter((t) => t.done)
 
+    //     setTicketsData(tempTickets2);
+    //     setCompletedTickets(tempCompletedTickets);
+    //     // setCompletedTickets(tempCompletedTicket);
+    // }
+
+
+    // let tempTickets2 = [...tickets.data].filter((t) => !t.done)
+    // const tempCompletedTickets = tempTickets.filter((t) => t.done)
+
+    async function fetchData() {
+        const tickets = await getTickets();
+        let tempTickets = [...tickets.data]
+        setTicketsData(tempTickets);
+        return tickets
+    }
+
+    async function updateCompleted() {
+        const tickets = await getTickets();
+        debugger
+        let tempTickets = [...tickets.data]
+        let ticketsDone = [...tempTickets].filter((t) => t.done)
+        let ticketsUnDone = [...tempTickets].filter((t) => !t.done)
+        setTicketsData(ticketsUnDone);
+        setCompletedTickets(ticketsDone)
+    }
+    
     useEffect(()=> {
-        async function fetchData() {
-            const tickets = await getTickets();
-            setTicketsData(tickets.data);
-        }
-        fetchData();
-    }, [])
+        fetchData().then(updateCompleted);
+    },[])
+
 
 
 
@@ -55,10 +83,15 @@ const TicketPage = () => {
     const completeTicketHandler = (ticket) => {
         const filteredTickets = ticketsData.filter((t) => t.id !== ticket.id)
         setTicketsData(filteredTickets)
-        setcompletedTickets([...completedTickets, ticket])
+        console.log([...completedTickets, ticket])
+        setCompletedTickets([...completedTickets, ticket])
     }
+    
+//     const getCompletedTicket = (ticket) => {
+//         const filteredTicket = ticketsData.filter((t) => t.id !== ticket.id)
+//         setTicketsData([...filteredTicket])
 
-
+// }
 
         
     // const startCountdown = (ticket) => {
@@ -110,31 +143,33 @@ const TicketPage = () => {
 
     }
 
-    const getCompletedTask = async (ticket) => {
-        const data = await getTicket(ticket.id)
+    const getCompletedTicket = async (ticket) => {
+        const {data} = await getTicket(ticket.id)
+        debugger
+        console.log(data)
         setTicketsData(data);
-
+        console.log(ticketsData)
     }
-
+    // const tickets2Data = [...ticketsData]
 
 
     return (
         <div>
+            {/* <Header /> */}
           <input id="searchInput" onChange={e => inputChangeHandler(e.target.value)} />
           <button id="restoreHideTickets" onClick={() => restoreHidden()}>Restore Hidden Tickets</button>
           
           <DropdownButton sortTicketsByDate={sortTicketsByDate} sortByContentLength={sortByContentLength}/>
-          <CompletedTasksButton variant="success" completedTickets={completedTickets} setcompletedTickets={setcompletedTickets} getCompletedTask={getCompletedTask} />
+          <CompletedTasksButton variant="success" completedTickets={completedTickets} setCompletedTickets={setCompletedTickets} getCompletedTicket={getCompletedTicket} getCompletedTicket={getCompletedTicket}/>
           {/* <Button variant="success">Completed Tasks: {completedTickets.length}</Button> */}
 
           <div id="hideTicketsCounter">{hiddenTickets.length}</div>
           <div className="hideTicketsCounter">Hidden Tickets = {hiddenTickets.length}</div>
           <div>Available Ticket = {ticketsData.length}</div>
-
-
-
-        {ticketsData.map(ticket => {
-                return <Ticket key={ticket.id} hideTicketsHandler={hideTicketsHandler} ticket={ticket} setTicketDone={setTicketDone} setTicketUnDone={setTicketUnDone} getDate={getDate} seconds={5}/>
+        
+        {
+            ticketsData.map((ticket) => {
+                return <Ticket key={ticket.id} hideTicketsHandler={hideTicketsHandler} ticket={ticket} setTicketDone={setTicketDone} setTicketUnDone={setTicketUnDone} getDate={getDate} seconds={5} />
         })}
         </div>
     );

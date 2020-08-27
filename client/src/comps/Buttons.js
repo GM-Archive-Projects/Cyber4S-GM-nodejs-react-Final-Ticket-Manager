@@ -1,7 +1,7 @@
 import React from "react";
 import { Dropdown } from 'react-bootstrap';
 import getTicket from './../apis/api'
-export const DropdownButton = ({sortTicketsByDate, sortByContentLength }) => {
+export const DropdownButton = ({sortTicketsByDate, sortByContentLength}) => {
 
     return (
 
@@ -23,18 +23,21 @@ export const DropdownButton = ({sortTicketsByDate, sortByContentLength }) => {
 
 }
 
-export const CompletedTasksButton = ({completedTickets, setcompletedTickets, getCompletedTask}) => {
+export const CompletedTasksButton = ({completedTickets, setcompletedTickets, getCompletedTicket}) => {
     
     return (
 
         <Dropdown>
             <Dropdown.Toggle variant="info" id="dropdown-basic">
-                Completed Tasks: {completedTickets.length}  
+                Completed Tickets: {completedTickets.length}  
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
+            {console.log(completedTickets)}
             {completedTickets.map((ticketCompleted) => {
-                return (<Dropdown.Item onClick={getCompletedTask}>{ticketCompleted.title}</Dropdown.Item>)
+                {/* ticketTitle = ticketCompleted */}
+                console.log(ticketCompleted)
+                return (<Dropdown.Item onClick={() => getCompletedTicket(ticketCompleted)}>{ticketCompleted.title}</Dropdown.Item>)
             })}
             </Dropdown.Menu>
         </Dropdown>
