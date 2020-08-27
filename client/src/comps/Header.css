@@ -1,0 +1,33 @@
+#mainHeader {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    gap: 1px 1px;
+    grid-template-areas: "mainHeader mainHeader mainHeader mainHeader mainHeader" ". searchInput searchInput searchInput ." "restoreHideTickets . . . ." "sortButton . . . hideTicketsCounter" "CompletedTickets . . . availableTickets";
+    text-align: center;
+    background-color: antiquewhite;
+    color: black;
+  }
+  
+  .mainHeader { grid-area: mainHeader; }
+  
+  .searchInput { grid-area: searchInput; }
+  
+  .restoreHideTickets { 
+      grid-area: restoreHideTickets; 
+      border-radius: 20px;
+      width: 50%;
+      background-color: lightblue;
+      border: none;
+    }
+  
+  .sortButton {
+    grid-area: sortButton; 
+    text-align: left;
+    }
+  
+  .CompletedTickets { grid-area: CompletedTickets; }
+  
+  .hideTicketsCounter { grid-area: hideTicketsCounter; }
+  
+  .availableTickets { grid-area: availableTickets; }

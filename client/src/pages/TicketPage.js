@@ -3,9 +3,9 @@ import { getTickets, searchTickets, setDone, setUnDone, getTicket } from '../api
 import Ticket  from '../comps/Ticket'
 import {DropdownButton}  from '../comps/Buttons'
 import {CompletedTasksButton}  from '../comps/Buttons'
-
+import {Header}  from '../comps/Header'
 import './TicketPage.css'
-import { Button } from 'react-bootstrap';
+
 
 //Insert USE Effect to fetch Data
 //Data will Be set at setData
@@ -15,6 +15,7 @@ const TicketPage = () => {
     const [ticketsData, setTicketsData] = useState([]);
     const [hiddenTickets, setHiddenTickets] = useState([])
     const [completedTickets, setCompletedTickets] = useState([])
+
     const [seconds, setSeconds] = useState(10)
 
 
@@ -27,7 +28,6 @@ const TicketPage = () => {
 
     async function updateCompleted() {
         const tickets = await getTickets();
-        debugger
         let tempTickets = [...tickets.data]
         let ticketsDone = [...tempTickets].filter((t) => t.done)
         let ticketsUnDone = [...tempTickets].filter((t) => !t.done)
@@ -71,10 +71,6 @@ const TicketPage = () => {
     
     const setTicketDone = async (ticket) => {
         await setDone(ticket.id)
-        // let tickets = await getTickets();
-        // updateCompleted(tickets)
-        // completeTicketHandler(ticket)
-         ;
         let newTickets = ticketsData.map((t) => {
             if(t.id === ticket.id) {
                 t.done = true;
@@ -93,10 +89,31 @@ const TicketPage = () => {
     
     const setTicketUnDone = async (ticket) => {
         await setUnDone(ticket.id)
-        const tickets = await getTickets();
+        let newTickets = ticketsData.map((t) => {
+            if(t.id === ticket.id) {
+                t.done = false;
+                return t;
+            }
+            return t;
+        });
+        // const completeTheTicket = newTickets.filter((tt) => tt.id !== ticket.id)
+
+        // setTicketsData(newTickets)
+        let newCompletedTicket = [...completedTickets]
+        let index = completedTickets.indexOf(ticket)
+        if (index > -1) {
+            newCompletedTicket.splice(index, 1)
+
+        }
+
+        setCompletedTickets([...newCompletedTicket])
+        
+        let undoTicket = ticketsData.filter((t) => t.id !== ticket.id)
+        setTicketsData(undoTicket)
+
+
 
         console.log(`Ticket Updated To be UnDone`)
-        setTicketsData(tickets.data);
     }
 
     const getDate = (time) => {
@@ -129,22 +146,12 @@ const TicketPage = () => {
 
     return (
         <div>
-            {/* <Header /> */}
-          <input id="searchInput" onChange={e => inputChangeHandler(e.target.value)} />
-          <button id="restoreHideTickets" onClick={() => restoreHidden()}>Restore Hidden Tickets</button>
-          
-          <DropdownButton sortTicketsByDate={sortTicketsByDate} sortByContentLength={sortByContentLength}/>
-          <CompletedTasksButton variant="success" completedTickets={completedTickets} setCompletedTickets={setCompletedTickets} getCompletedTicket={getCompletedTicket} getCompletedTicket={getCompletedTicket} setTicketUnDone={setTicketUnDone}/>
-          {/* <Button variant="success">Completed Tasks: {completedTickets.length}</Button> */}
-
-          <div id="hideTicketsCounter">{hiddenTickets.length}</div>
-          <div className="hideTicketsCounter">Hidden Tickets = {hiddenTickets.length}</div>
-          <div>Available Ticket = {ticketsData.length}</div>
-        
+            <Header inputChangeHandler={inputChangeHandler} restoreHidden={restoreHidden}  sortTicketsByDate={sortTicketsByDate} sortByContentLength={sortByContentLength} completedTickets={completedTickets} setCompletedTickets={setCompletedTickets} getCompletedTicket={getCompletedTicket} setTicketUnDone={setTicketUnDone} hiddenTickets={hiddenTickets} ticketsData={ticketsData}/>
         {
             ticketsData.map((ticket) => {
                 return <Ticket key={ticket.id} hideTicketsHandler={hideTicketsHandler} ticket={ticket} setTicketDone={setTicketDone} setTicketUnDone={setTicketUnDone} getDate={getDate} seconds={5} />
         })}
+
         </div>
     );
 }

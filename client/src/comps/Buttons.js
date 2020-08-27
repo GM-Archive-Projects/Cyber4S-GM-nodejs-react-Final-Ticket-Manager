@@ -1,6 +1,15 @@
 import React from "react";
-import { Dropdown, Button } from 'react-bootstrap';
-import getTicket from './../apis/api'
+import { Dropdown } from 'react-bootstrap';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Button from '@material-ui/core/Button';
+
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    button: {
+      margin: theme.spacing(1),
+    },
+  }));
 export const DropdownButton = ({sortTicketsByDate, sortByContentLength}) => {
 
     return (
@@ -24,11 +33,11 @@ export const DropdownButton = ({sortTicketsByDate, sortByContentLength}) => {
 }
 
 export const CompletedTasksButton = ({completedTickets, setTicketUnDone, getCompletedTicket}) => {
-    
+    const classes = useStyles();
     return (
 
         <Dropdown>
-            <Dropdown.Toggle variant="info" id="dropdown-basic">
+            <Dropdown.Toggle variant="success" id="dropdown-basic">
                 Completed Tickets: {completedTickets.length}  
             </Dropdown.Toggle>
 
@@ -37,7 +46,12 @@ export const CompletedTasksButton = ({completedTickets, setTicketUnDone, getComp
             {completedTickets.map((ticketCompleted) => {
                 {/* ticketTitle = ticketCompleted */}
                 console.log(ticketCompleted)
-                return (<Dropdown.Item onClick={() => getCompletedTicket(ticketCompleted)}>{ticketCompleted.title} <Button onClick={() => setTicketUnDone(ticketCompleted)}>Undone Ticket</Button>
+                return (
+                    <Dropdown.Item>
+                        <Button onClick={() => getCompletedTicket(ticketCompleted)}>{ticketCompleted.title}</Button>
+                        <Button onClick={() => setTicketUnDone(ticketCompleted)} variant="contained" color="secondary" className={classes.button} startIcon={<DeleteIcon />}>
+                        Undone Ticket
+                        </Button>
                 </Dropdown.Item>)
             })}
             </Dropdown.Menu>
