@@ -1,5 +1,5 @@
 import React from "react";
-import { Dropdown } from 'react-bootstrap';
+import { Dropdown, Button } from 'react-bootstrap';
 import getTicket from './../apis/api'
 export const DropdownButton = ({sortTicketsByDate, sortByContentLength}) => {
 
@@ -23,7 +23,7 @@ export const DropdownButton = ({sortTicketsByDate, sortByContentLength}) => {
 
 }
 
-export const CompletedTasksButton = ({completedTickets, setcompletedTickets, getCompletedTicket}) => {
+export const CompletedTasksButton = ({completedTickets, setTicketUnDone, getCompletedTicket}) => {
     
     return (
 
@@ -37,7 +37,8 @@ export const CompletedTasksButton = ({completedTickets, setcompletedTickets, get
             {completedTickets.map((ticketCompleted) => {
                 {/* ticketTitle = ticketCompleted */}
                 console.log(ticketCompleted)
-                return (<Dropdown.Item onClick={() => getCompletedTicket(ticketCompleted)}>{ticketCompleted.title}</Dropdown.Item>)
+                return (<Dropdown.Item onClick={() => getCompletedTicket(ticketCompleted)}>{ticketCompleted.title} <Button onClick={() => setTicketUnDone(ticketCompleted)}>Undone Ticket</Button>
+                </Dropdown.Item>)
             })}
             </Dropdown.Menu>
         </Dropdown>

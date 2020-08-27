@@ -17,29 +17,9 @@ const TicketPage = () => {
     const [completedTickets, setCompletedTickets] = useState([])
     const [seconds, setSeconds] = useState(10)
 
-    // useEffect(seconds) => {
-    //     if (seconds >= 0) {
-    //         setTimeout(() => setSeconds(seconds - 1))
-    //     } else {setSeconds(-1)}
-    // }
-
-    // async function fetchData() {
-    //     const tickets = await getTickets();
-    //     let tempTickets = [...tickets.data]
-    //     let tempTickets2 = [...tickets.data].filter((t) => !t.done)
-    //     const tempCompletedTickets = tempTickets.filter((t) => t.done)
-
-    //     setTicketsData(tempTickets2);
-    //     setCompletedTickets(tempCompletedTickets);
-    //     // setCompletedTickets(tempCompletedTicket);
-    // }
-
-
-    // let tempTickets2 = [...tickets.data].filter((t) => !t.done)
-    // const tempCompletedTickets = tempTickets.filter((t) => t.done)
 
     async function fetchData() {
-        const tickets = await getTickets();
+        let tickets = await getTickets();
         let tempTickets = [...tickets.data]
         setTicketsData(tempTickets);
         return tickets
@@ -87,41 +67,35 @@ const TicketPage = () => {
         setCompletedTickets([...completedTickets, ticket])
     }
     
-//     const getCompletedTicket = (ticket) => {
-//         const filteredTicket = ticketsData.filter((t) => t.id !== ticket.id)
-//         setTicketsData([...filteredTicket])
 
-// }
-
-        
-    // const startCountdown = (ticket) => {
-    //     if (seconds >= 0) {
-    //         setTimeout(() => setSeconds(seconds - 1), 1000)
-    //         console.log(seconds)
-    //         return seconds
-    //     } else {
-    //         setSeconds(9)
-    //         return seconds
-    //     }
-    // }
-
-
-
+    
     const setTicketDone = async (ticket) => {
         await setDone(ticket.id)
-        console.log(`Ticket Updated To be Done`)
-        const tickets = await getTickets();
-        setTicketsData(tickets.data);
+        // let tickets = await getTickets();
+        // updateCompleted(tickets)
+        // completeTicketHandler(ticket)
+         ;
+        let newTickets = ticketsData.map((t) => {
+            if(t.id === ticket.id) {
+                t.done = true;
+                return t;
+            }
+            return t;
+        });
+        // const completeTheTicket = newTickets.filter((tt) => tt.id !== ticket.id)
 
+        setTicketsData(newTickets)
+        console.log(`Ticket Updated To be Done`)
         setTimeout(() => completeTicketHandler(ticket), 5000)
         
-        
     }
+
     
     const setTicketUnDone = async (ticket) => {
         await setUnDone(ticket.id)
-        console.log(`Ticket Updated To be UnDone`)
         const tickets = await getTickets();
+
+        console.log(`Ticket Updated To be UnDone`)
         setTicketsData(tickets.data);
     }
 
@@ -160,7 +134,7 @@ const TicketPage = () => {
           <button id="restoreHideTickets" onClick={() => restoreHidden()}>Restore Hidden Tickets</button>
           
           <DropdownButton sortTicketsByDate={sortTicketsByDate} sortByContentLength={sortByContentLength}/>
-          <CompletedTasksButton variant="success" completedTickets={completedTickets} setCompletedTickets={setCompletedTickets} getCompletedTicket={getCompletedTicket} getCompletedTicket={getCompletedTicket}/>
+          <CompletedTasksButton variant="success" completedTickets={completedTickets} setCompletedTickets={setCompletedTickets} getCompletedTicket={getCompletedTicket} getCompletedTicket={getCompletedTicket} setTicketUnDone={setTicketUnDone}/>
           {/* <Button variant="success">Completed Tasks: {completedTickets.length}</Button> */}
 
           <div id="hideTicketsCounter">{hiddenTickets.length}</div>
