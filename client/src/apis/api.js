@@ -1,30 +1,16 @@
-//API Calls To Use
-import React, {useEffect, useState} from 'react'
-import axios from 'axios';
-import { TICKETS, SEARCHTEXT, TICKET } from './consts'
+// API Calls To Use
+import axios from "axios";
+import { TICKETS, SEARCHTEXT, TICKET } from "./consts";
 
 // axios.defaults.headers.post["Content-Type"] = "application/json; charset=utf-8";
 axios.defaults.validateStatus = (status) => status >= 200 && status < 300;
 
-export const getTickets = async () => {
-    return await axios.get(TICKETS)
-}
+export const getTickets = () => axios.get(TICKETS);
 
-export const searchTickets = async (input) => {
-    return await axios.get(SEARCHTEXT + input)
-}
+export const searchTickets = (input) => axios.get(SEARCHTEXT + input);
 
-export const setDone = async (input) => {
-    return await axios.post(TICKETS + '/' + input + '/done')
-}
+export const setDone = (input) => axios.post(`${TICKETS}/${input}/done`);
 
+export const setUnDone = (input) => axios.post(`${TICKETS}/${input}/undone`);
 
-export const setUnDone = async (input) => {
-    return await axios.post(TICKETS + '/' + input + '/undone')
-}
-
-
-
-export const getTicket = async (ticketId) => {
-    return await axios.get(TICKET + ticketId)
-}
+export const getTicket = (ticketId) => axios.get(TICKET + ticketId);

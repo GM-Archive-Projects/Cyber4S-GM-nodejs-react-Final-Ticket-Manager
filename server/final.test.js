@@ -13,29 +13,29 @@ describe(projectName, () => {
   });
   afterEach(async () => {
     await full4s.afterEach();
-  })
+  });
   afterAll(async () => {
     await full4s.afterAll(projectName);
   });
   test('Can get all tickets', async () => {
     const { body } = await request(app)
       .get('/api/tickets')
-      .expect(200)
+      .expect(200);
 
-    console.log('body', body.length)
-    expect(body.length).toBe(data.length)
-    expect(body[0].id).toBe(data[0].id)
+    console.log('body', body.length);
+    expect(body.length).toBe(data.length);
+    expect(body[0].id).toBe(data[0].id);
   });
 
   test('Can get relevant tickets by searchText query param', async () => {
     const { body } = await request(app)
       .get('/api/tickets').query({
-        searchText: 'full'
+        searchText: 'full',
       })
-      .expect(200)
+      .expect(200);
 
-    expect(body.length).toBe(1)
-    expect(body[0].id).toBe('78d09b01-6ca0-5746-82a4-9e02db81552a')
+    expect(body.length).toBe(1);
+    expect(body[0].id).toBe('78d09b01-6ca0-5746-82a4-9e02db81552a');
   });
 
   // test('Can mark ticket as done and undone', async () => {
@@ -60,4 +60,4 @@ describe(projectName, () => {
   //   const updatedData2 = require('./data.json');
   //   expect(updatedData2[0].done).toBe(currentState);
   // });
-})
+});
