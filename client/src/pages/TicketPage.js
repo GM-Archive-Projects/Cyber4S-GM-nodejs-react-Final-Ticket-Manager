@@ -17,8 +17,6 @@ const TicketPage = () => {
   const [hiddenTickets, setHiddenTickets] = useState([]);
   const [completedTickets, setCompletedTickets] = useState([]);
 
-  const [seconds, setSeconds] = useState(10);
-
   async function fetchData() {
     const tickets = await getTickets();
     const tempTickets = [...tickets.data];
@@ -134,7 +132,7 @@ const TicketPage = () => {
     <div>
       <Header inputChangeHandler={inputChangeHandler} restoreHidden={restoreHidden} sortTicketsByDate={sortTicketsByDate} sortByContentLength={sortByContentLength} completedTickets={completedTickets} setCompletedTickets={setCompletedTickets} getCompletedTicket={getCompletedTicket} setTicketUnDone={setTicketUnDone} hiddenTickets={hiddenTickets} ticketsData={ticketsData} />
       {
-        ticketsData.map((ticket) => <Ticket key={ticket.id} hideTicketsHandler={hideTicketsHandler} ticket={ticket} setTicketDone={setTicketDone} setTicketUnDone={setTicketUnDone} getDate={getDate} seconds={5} />)
+        ticketsData.map((ticket) => <Ticket key={ticket.id} hideTicketsHandler={hideTicketsHandler} ticket={ticket} setTicketDone={setTicketDone} setTicketUnDone={setTicketUnDone} getDate={getDate}/>)
       }
 
     </div>
